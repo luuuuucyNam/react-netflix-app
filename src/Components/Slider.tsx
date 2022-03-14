@@ -9,6 +9,9 @@ import { makeImagePath } from "../utils";
 const SliderWrapper = styled.div`
   position: relative;
   top: -100px;
+  display: flex;
+  flex-direction: row;
+  right: 50px;
 `;
 
 const Row = styled(motion.div)`
@@ -48,6 +51,15 @@ const Info = styled(motion.div)`
   }
 `;
 
+const Button = styled.button`
+  position: absolute;
+  right: 0;
+  width: 50px;
+  background-color: transparent;
+  color: white;
+  border: 0;
+  cursor: pointer;
+`;
 const rowVariants = {
   hidden: {
     x: window.outerWidth + 5,
@@ -120,38 +132,41 @@ function Slider({ getData, id }: ISlider) {
   };
 
   return (
-    <SliderWrapper>
-      <AnimatePresence initial={false} onExitComplete={toggleLeaving}>
-        <Row
-          variants={rowVariants}
-          initial="hidden"
-          animate="visible"
-          exit="exit"
-          transition={{ type: "tween", duration: 1 }}
-          key={index}
-        >
-          {data?.results
-            .slice(1)
-            .slice(offset * index, offset * index + offset)
-            .map((movie) => (
-              <Box
-                key={movie.id}
-                bgPhoto={makeImagePath(movie?.backdrop_path, "w500")}
-                whileHover="hover"
-                initial="normal"
-                variants={boxVariants}
-                transition={{ type: "tween" }}
-                layoutId={movie.id + ""}
-                onClick={() => onBoxClicked(movie.id)}
-              >
-                <Info variants={infoVariants}>
-                  <h4>{movie.title}</h4>
-                </Info>
-              </Box>
-            ))}
-        </Row>
-      </AnimatePresence>
-    </SliderWrapper>
+    <div>
+      <SliderWrapper>
+        <AnimatePresence initial={false} onExitComplete={toggleLeaving}>
+          <Row
+            variants={rowVariants}
+            initial="hidden"
+            animate="visible"
+            exit="exit"
+            transition={{ type: "tween", duration: 1 }}
+            key={index}
+          >
+            {data?.results
+              .slice(1)
+              .slice(offset * index, offset * index + offset)
+              .map((movie) => (
+                <Box
+                  key={movie.id}
+                  bgPhoto={makeImagePath(movie?.backdrop_path, "w500")}
+                  whileHover="hover"
+                  initial="normal"
+                  variants={boxVariants}
+                  transition={{ type: "tween" }}
+                  layoutId={movie.id + ""}
+                  onClick={() => onBoxClicked(movie.id)}
+                >
+                  <Info variants={infoVariants}>
+                    <h4>{movie.title}</h4>
+                  </Info>
+                </Box>
+              ))}
+          </Row>
+        </AnimatePresence>
+      </SliderWrapper>
+      <Button onClick={incraseIndex}>{">"}</Button>
+    </div>
   );
 }
 
