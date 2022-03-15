@@ -49,3 +49,21 @@ export function getLatestMovies() {
     (response) => response.json()
   );
 }
+
+export function getPopularTV() {
+  return fetch(`${BASE_PATH}/tv/popular?api_key=${API_KEY}`).then((response) =>
+    response.json()
+  );
+}
+
+export function getTopRatedTV() {
+  return fetch(`${BASE_PATH}/tv/top_rated?api_key=${API_KEY}`).then(
+    (response) => response.json()
+  );
+}
+
+export function getOnTheAirTV() {
+  return fetch(`${BASE_PATH}/tv/on_the_air?api_key=${API_KEY}`).then(
+    (response) => response.json()
+  );
+}
